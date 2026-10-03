@@ -35,7 +35,7 @@ git version 2.56.0.windows.1
 
 ```powershell
 git config --global user.name "Montassar"
-git config --global user.email "<adresse e-mail>"
+git config --global user.email "<montassarmh04@gmail.com>"
 git config --global init.defaultBranch main
 git config --list
 ```
@@ -44,7 +44,7 @@ Extrait du résultat :
 
 ```text
 user.name=Montassar
-user.email=<adresse e-mail>
+user.email=<montassarmh04@gmail.com>
 init.defaultbranch=main
 ```
 
