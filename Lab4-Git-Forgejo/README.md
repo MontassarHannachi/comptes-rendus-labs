@@ -1,7 +1,7 @@
 # Lab 4 : Installation et exploitation de Git et Forgejo
 
 **Auteur :** Montassar Hannachi
-
+**Date :** 02/10/2026
 
 ## 1\. Objectif
 
@@ -17,6 +17,8 @@ Installer Git, déployer Forgejo dans un conteneur Docker, puis utiliser Git ave
 |Forgejo|Version 15, image `codeberg.org/forgejo/forgejo:15`|
 |Base de données|SQLite3|
 |Accès|`http://localhost:3000`|
+
+## 
 
 ## 3\. Installation de Git
 
@@ -35,7 +37,7 @@ git version 2.56.0.windows.1
 
 ```powershell
 git config --global user.name "Montassar"
-git config --global user.email "<montassarmh04@gmail.com>"
+git config --global user.email "montassarmh04@gmail.com"
 git config --global init.defaultBranch main
 git config --list
 ```
@@ -44,13 +46,15 @@ Extrait du résultat :
 
 ```text
 user.name=Montassar
-user.email=<montassarmh04@gmail.com>
+user.email=montassarmh04@gmail.com
 init.defaultbranch=main
 ```
 
 L'option `init.defaultBranch main` évite que la branche initiale s'appelle `master`, afin de rester cohérent avec la branche `main` utilisée plus tard pour le `push`.
 
 ## 5\. Création du dépôt local et premier commit
+
+
 
 ```powershell
 cd $HOME
