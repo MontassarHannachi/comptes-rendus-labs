@@ -1,26 +1,26 @@
 # Lab 4 : Installation et exploitation de Git et Forgejo
 
-**Auteur :** Montassar Hannachi
+**Auteur :** Montassar Hannachi  
 **Date :** 02/10/2026
 
-## 1\. Objectif
+## 1. Objectif
 
 Installer Git, déployer Forgejo dans un conteneur Docker, puis utiliser Git avec un dépôt distant hébergé sur Forgejo (création du dépôt, 3 commits, publication, clonage et synchronisation).
 
-## 2\. Environnement
+## 2. Environnement
 
-|Élément|Valeur|
-|-|-|
-|Système|Windows 11, terminal PowerShell|
-|Git|2.56.0 (Git for Windows)|
-|Docker|Docker Desktop 29.8.1 avec WSL 2|
-|Forgejo|Version 15, image `codeberg.org/forgejo/forgejo:15`|
-|Base de données|SQLite3|
-|Accès|`http://localhost:3000`|
+| Élément | Valeur |
+|---|---|
+| Système | Windows 11, terminal PowerShell |
+| Git | 2.56.0 (Git for Windows) |
+| Docker | Docker Desktop 29.8.1 avec WSL 2 |
+| Forgejo | Version 15, image `codeberg.org/forgejo/forgejo:15` |
+| Base de données | SQLite3 |
+| Accès | `http://localhost:3000` |
 
-## 
+> **Remarque :** l'énoncé prévoit une VM Ubuntu. Docker Desktop (WSL 2) a été utilisé à la place sur le poste Windows. L'adresse `IP_VM` de l'énoncé est donc remplacée par `localhost`.
 
-## 3\. Installation de Git
+## 3. Installation de Git
 
 ```powershell
 winget install --id Git.Git -e
@@ -33,7 +33,7 @@ Résultat :
 git version 2.56.0.windows.1
 ```
 
-## 4\. Configuration de Git
+## 4. Configuration de Git
 
 ```powershell
 git config --global user.name "Montassar"
@@ -52,9 +52,9 @@ init.defaultbranch=main
 
 L'option `init.defaultBranch main` évite que la branche initiale s'appelle `master`, afin de rester cohérent avec la branche `main` utilisée plus tard pour le `push`.
 
-## 5\. Création du dépôt local et premier commit
+## 5. Création du dépôt local et premier commit
 
-
+`touch` n'existe pas sous PowerShell : la commande `New-Item` est utilisée à la place.
 
 ```powershell
 cd $HOME
@@ -70,13 +70,13 @@ Résultat :
 
 ```text
 Initialized empty Git repository in C:/Users/Infoshop/ProjetForgejo/.git/
-\[main (root-commit) 4ee3a30] Initialisation du projet
+[main (root-commit) 4ee3a30] Initialisation du projet
  2 files changed, 0 insertions(+), 0 deletions(-)
  create mode 100644 file1.txt
  create mode 100644 file2.txt
 ```
 
-## 6\. Installation de Docker
+## 6. Installation de Docker
 
 L'étape « VM Linux » est remplacée par Docker Desktop sur Windows.
 
@@ -92,47 +92,49 @@ Résultat :
 ```text
 Docker version 29.8.1, build 4a63305
 
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
 ```
 
-## 7\. Déploiement de Forgejo
+## 7. Déploiement de Forgejo
 
 ```powershell
-docker volume create forgejo\_data
+docker volume create forgejo_data
 
 docker run -d --name forgejo `
   -p 3000:3000 -p 2222:22 `
-  -v forgejo\_data:/data `
+  -v forgejo_data:/data `
   codeberg.org/forgejo/forgejo:15
 
 docker ps
 ```
 
-* Le volume `forgejo\_data` conserve les données de Forgejo même si le conteneur est supprimé.
-* Le port `3000` donne accès à l'interface web, le port `2222` redirige vers le SSH du conteneur.
+- Le volume `forgejo_data` conserve les données de Forgejo même si le conteneur est supprimé.
+- Le port `3000` donne accès à l'interface web, le port `2222` redirige vers le SSH du conteneur.
 
 Résultat de `docker ps` :
 
 ```text
 CONTAINER ID   IMAGE                             COMMAND                  CREATED          STATUS          PORTS                                                                                  NAMES
-2bde2a3a3be5   codeberg.org/forgejo/forgejo:15   "/usr/bin/entrypoint…"   26 seconds ago   Up 24 seconds   0.0.0.0:3000->3000/tcp, \[::]:3000->3000/tcp, 0.0.0.0:2222->22/tcp, \[::]:2222->22/tcp   forgejo
+2bde2a3a3be5   codeberg.org/forgejo/forgejo:15   "/usr/bin/entrypoint…"   26 seconds ago   Up 24 seconds   0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp, 0.0.0.0:2222->22/tcp, [::]:2222->22/tcp   forgejo
 ```
 
 Le conteneur `forgejo` est au statut `Up`.
 
-## 8\. Accès à Forgejo et assistant d'installation
+## 8. Accès à Forgejo et assistant d'installation
 
 Ouverture de `http://localhost:3000`, puis configuration de l'assistant :
 
-* Base de données : SQLite3
-* Domaine du serveur : `localhost`
-* URL de base : `http://localhost:3000/`
-* Compte administrateur créé dans les paramètres facultatifs
+- Base de données : SQLite3
+- Domaine du serveur : `localhost`
+- URL de base : `http://localhost:3000/`
+- Compte administrateur créé dans les paramètres facultatifs
 
-## 9\. Création du dépôt Forgejo
+## 9. Création du dépôt Forgejo
 
 Création du dépôt `tp-forgejo` depuis l'interface web, **vide** (sans README, sans .gitignore, sans licence) pour éviter un conflit au premier `push`.
 
-## 10\. Liaison, 3 commits et publication
+## 10. Liaison, 3 commits et publication
 
 ```powershell
 git remote add origin http://localhost:3000/Montassar/tp-forgejo.git
@@ -182,11 +184,13 @@ Compressing objects: 100% (6/6), done.
 Writing objects: 100% (9/9), 806 bytes | 403.00 KiB/s, done.
 Total 9 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
 To http://localhost:3000/Montassar/tp-forgejo.git
- \* \[new branch]      main -> main
+ * [new branch]      main -> main
 branch 'main' set up to track 'origin/main'.
 ```
 
-## 11\. Clonage
+L'avertissement sur les URL HTTP non chiffrées est attendu, car le serveur est local (`localhost`).
+
+## 11. Clonage
 
 ```powershell
 cd $HOME
@@ -209,7 +213,7 @@ Receiving objects: 100% (9/9), done.
 
 Le clone contient exactement les 3 mêmes commits.
 
-## 12\. Synchronisation
+## 12. Synchronisation
 
 Modification et publication depuis le clone :
 
@@ -221,7 +225,7 @@ git push
 ```
 
 ```text
-\[main 34141e2] Modification depuis le clone
+[main 34141e2] Modification depuis le clone
  1 file changed, 1 insertion(+)
 To http://localhost:3000/Montassar/tp-forgejo.git
    7bc8211..34141e2  main -> main
@@ -230,7 +234,7 @@ To http://localhost:3000/Montassar/tp-forgejo.git
 Récupération dans le dossier d'origine :
 
 ```powershell
-cd $HOME\\ProjetForgejo
+cd $HOME\ProjetForgejo
 git pull
 git log --oneline
 ```
@@ -251,7 +255,6 @@ Fast-forward
 
 Le `pull` s'effectue en mode *Fast-forward* (sans conflit) et le 4e commit apparaît : la synchronisation fonctionne dans les deux sens.
 
-## 13\. Conclusion
+## 13. Conclusion
 
-Ce lab a permis d'installer et de configurer Git, de déployer un serveur Git auto-hébergé (Forgejo) dans un conteneur Docker, puis de réaliser un cycle de travail complet : création d'un dépôt distant, commits, `push`, `clone` et synchronisation avec `pull`. L'utilisation d'un volume Docker garantit la persistance des données de Forgejo. Les difficultés rencontrées (tag d'image, dossier protégé, confusion entre terminaux) ont été résolues et documentées ci-dessus.
-
+Ce lab a permis d'installer et de configurer Git, de déployer un serveur Git auto-hébergé (Forgejo) dans un conteneur Docker, puis de réaliser un cycle de travail complet : création d'un dépôt distant, commits, `push`, `clone` et synchronisation avec `pull`. L'utilisation d'un volume Docker garantit la persistance des données de Forgejo.
