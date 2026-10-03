@@ -18,8 +18,6 @@ Installer Git, déployer Forgejo dans un conteneur Docker, puis utiliser Git ave
 | Base de données | SQLite3 |
 | Accès | `http://localhost:3000` |
 
-> **Remarque :** l'énoncé prévoit une VM Ubuntu. Docker Desktop (WSL 2) a été utilisé à la place sur le poste Windows. L'adresse `IP_VM` de l'énoncé est donc remplacée par `localhost`.
-
 ## 3. Installation de Git
 
 ```powershell
