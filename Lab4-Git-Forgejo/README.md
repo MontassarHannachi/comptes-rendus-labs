@@ -76,8 +76,6 @@ Initialized empty Git repository in C:/Users/Infoshop/ProjetForgejo/.git/
 
 ## 6. Installation de Docker
 
-L'étape « VM Linux » est remplacée par Docker Desktop sur Windows.
-
 ```powershell
 wsl --install
 winget install --id Docker.DockerDesktop -e
